@@ -15,6 +15,22 @@ module Time.Calendar.Gregorian
         , diffGregorianDurationRollOver
         )
 
+{-| TODO
+
+@docs toGregorian
+@docs fromGregorian
+@docs fromGregorianValid
+@docs showGregorian
+@docs gregorianMonthLength
+@docs addGregorianMonthsClip
+@docs addGregorianMonthsRollOver
+@docs addGregorianYearsClip
+@docs addGregorianYearsRollOver
+@docs addGregorianDurationClip
+@docs addGregorianDurationRollOver
+@docs diffGregorianDurationClip
+@docs diffGregorianDurationRollOver
+-}
 import Time.Calendar.MonthDay exposing (..)
 import Time.Calendar.OrdinalDate exposing (..)
 import Time.Calendar.Days as Days exposing (..)

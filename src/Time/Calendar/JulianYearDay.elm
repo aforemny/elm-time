@@ -1,5 +1,12 @@
 module Time.Calendar.JulianYearDay exposing (..)
 
+{-| TODO
+
+@docs fromJulianYearAndDay, fromJulianYearAndDayValid
+@docs isJulianLeapYear
+@docs showJulianYearAndDay, toJulianYearAndDay
+-}
+
 import Time.Calendar.Days exposing (..)
 import Time.Calendar.Private exposing (..)
 

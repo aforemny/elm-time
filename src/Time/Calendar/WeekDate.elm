@@ -1,6 +1,11 @@
 module Time.Calendar.WeekDate exposing (..)
 
 {-| ISO 8601 Week Date format
+
+@docs fromWeekDate
+@docs fromWeekDateValid
+@docs showWeekDate
+@docs toWeekDate
 -}
 
 import Time.Calendar.OrdinalDate exposing (..)

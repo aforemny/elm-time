@@ -6,9 +6,18 @@ module Time.Calendar.Week
         , toInt
         )
 
+{-| TODO
+
+@docs DayOfWeek
+@docs dayOfWeek
+@docs fromInt, toInt
+-}
+
 import Time.Calendar.Days as Days exposing (Day)
 
 
+{-| TODO
+-}
 type DayOfWeek
     = Monday
     | Tuesday
@@ -19,6 +28,8 @@ type DayOfWeek
     | Sunday
 
 
+{-| TODO
+-}
 fromInt : Int -> DayOfWeek
 fromInt i =
     case i % 7 of
@@ -44,6 +55,8 @@ fromInt i =
             Saturday
 
 
+{-| TODO
+-}
 toInt : DayOfWeek -> Int
 toInt dayOfWeek =
     case dayOfWeek of
@@ -69,6 +82,8 @@ toInt dayOfWeek =
             7
 
 
+{-| TODO
+-}
 dayOfWeek : Day -> DayOfWeek
 dayOfWeek date =
     fromInt (Days.toInt date + 3)

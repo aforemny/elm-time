@@ -7,7 +7,15 @@ module Time.Calendar.Easter
         , gregorianEaster
         )
 
-{-| formulae from Reingold & Dershowitz, _Calendrical Calculations_, ch. 8.
+{-| TODO
+
+formulae from Reingold & Dershowitz, _Calendrical Calculations_, ch. 8.
+
+@docs sundayAfter
+@docs orthodoxPaschalMoon
+@docs orthodoxEaster
+@docs gregorianPaschalMoon
+@docs gregorianEaster
 -}
 
 import Time.Calendar.CalendarDiffDays exposing (..)

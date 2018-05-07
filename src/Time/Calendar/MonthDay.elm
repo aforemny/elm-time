@@ -5,6 +5,13 @@ module Time.Calendar.MonthDay exposing
     , monthLength
     )
 
+{-| TODO
+
+@docs dayOfYearToMonthAndDay
+@docs monthAndDayToDayOfYear, monthAndDayToDayOfYearValid
+@docs monthLength
+
+-}
 import Time.Calendar.Private exposing (..)
 
 

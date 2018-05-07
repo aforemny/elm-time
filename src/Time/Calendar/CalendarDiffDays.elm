@@ -1,10 +1,22 @@
 module Time.Calendar.CalendarDiffDays exposing (..)
 
+{-| TODO
 
+@docs CalendarDiffDays
+@docs cdDays, cdMonths
+@docs calendarDay, calendarMonth, calendarWeek, calendarYear
+@docs scaleCalendarDiffDays
+-}
+
+
+{-| TODO
+-}
 type CalendarDiffDays
     = CalendarDiffDays Int Int
 
 
+{-| TODO
+-}
 cdMonths : CalendarDiffDays -> Int
 cdMonths diffDays =
     case diffDays of
@@ -12,6 +24,8 @@ cdMonths diffDays =
             m
 
 
+{-| TODO
+-}
 cdDays : CalendarDiffDays -> Int
 cdDays diffDays =
     case diffDays of
@@ -19,21 +33,29 @@ cdDays diffDays =
             d
 
 
+{-| TODO
+-}
 calendarDay : CalendarDiffDays
 calendarDay =
     CalendarDiffDays 0 1
 
 
+{-| TODO
+-}
 calendarWeek : CalendarDiffDays
 calendarWeek =
     CalendarDiffDays 0 7
 
 
+{-| TODO
+-}
 calendarMonth : CalendarDiffDays
 calendarMonth =
     CalendarDiffDays 1 0
 
 
+{-| TODO
+-}
 calendarYear : CalendarDiffDays
 calendarYear =
     CalendarDiffDays 12 0

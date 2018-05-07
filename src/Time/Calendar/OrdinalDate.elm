@@ -1,6 +1,15 @@
 module Time.Calendar.OrdinalDate exposing (..)
 
 {-| ISO 8601 Ordinal Date format
+
+@docs fromMondayStartWeek, fromMondayStartWeekValid
+@docs fromOrdinalDate, fromOrdinalDateValid
+@docs fromSundayStartWeek, fromSundayStartWeekValid
+@docs isLeapYear
+@docs mondayStartWeek
+@docs showOrdinalDate
+@docs sundayStartWeek
+@docs toOrdinalDate
 -}
 
 import Time.Calendar.Days as Days exposing (Day)
@@ -201,6 +210,8 @@ fromMondayStartWeek year w d =
         Days.addDays zbYearDay firstDay
 
 
+{-| TODO
+-}
 fromMondayStartWeekValid : Int -> Int -> Int -> Maybe Day
 fromMondayStartWeekValid year w d =
     clipValid 1 7 d
@@ -273,6 +284,8 @@ fromSundayStartWeek year w d =
         Days.addDays zbYearDay firstDay
 
 
+{-| TODO
+-}
 fromSundayStartWeekValid : Int -> Int -> Int -> Maybe Day
 fromSundayStartWeekValid year w d =
     clipValid 0 6 d

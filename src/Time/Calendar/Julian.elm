@@ -15,6 +15,23 @@ module Time.Calendar.Julian
         , diffJulianDurationRollOver
         )
 
+{-| TODO
+
+@docs toJulian
+@docs fromJulian
+@docs fromJulianValid
+@docs showJulian
+@docs julianMonthLength
+@docs addJulianMonthsClip
+@docs addJulianMonthsRollOver
+@docs addJulianYearsClip
+@docs addJulianYearsRollOver
+@docs addJulianDurationClip
+@docs addJulianDurationRollOver
+@docs diffJulianDurationClip
+@docs diffJulianDurationRollOver
+-}
+
 import Time.Calendar.CalendarDiffDays exposing (..)
 import Time.Calendar.Days as Days exposing (..)
 import Time.Calendar.JulianYearDay exposing (..)
