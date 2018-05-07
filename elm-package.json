@@ -1,0 +1,26 @@
+{
+    "version": "1.0.0",
+    "summary": "Time, clocks and calendar",
+    "repository": "https://github.com/aforemny/elm-time.git",
+    "license": "BSD3",
+    "source-directories": [
+        "src"
+    ],
+    "exposed-modules": [
+        "Time.Calendar.CalendarDiffDays",
+        "Time.Calendar.Days",
+        "Time.Calendar.Easter",
+        "Time.Calendar.Gregorian",
+        "Time.Calendar.Julian",
+        "Time.Calendar.JulianYearDay",
+        "Time.Calendar.MonthDay",
+        "Time.Calendar.OrdinalDate",
+        "Time.Calendar.Week",
+        "Time.Calendar.WeekDate"
+    ],
+    "dependencies": {
+        "elm-lang/core": "5.1.1 <= v < 6.0.0",
+        "elm-lang/html": "2.0.0 <= v < 3.0.0"
+    },
+    "elm-version": "0.18.0 <= v < 0.19.0"
+}
