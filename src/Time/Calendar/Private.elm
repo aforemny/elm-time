@@ -29,10 +29,74 @@ showPaddedNum padOption i =
                 showPadded pad (toString i)
 
 
+show2Fixed : Int -> Int -> String
+show2Fixed res x =
+    if x < 10 then
+        String.cons '0' (showFixed res True x)
+    else
+        showFixed res True x
 
---show2Fixed : Pico -> String
---show2Fixed x | x < 10 = '0':(showFixed True x)
---show2Fixed x = showFixed True x
+
+showFixed : Int -> Bool -> Int -> String
+showFixed res chopTrailingZeros a =
+    if a < 0 then
+        "-" ++ (showFixed res chopTrailingZeros (-a))
+    else
+        let
+            ( i, d ) =
+                ( a // res, a % res )
+
+            -- enough digits to be unambiguous
+            digits =
+                ceiling (logBase 10 (toFloat res))
+
+            maxnum =
+                10 ^ digits
+
+            -- read floors, so show must ceil for `read . show = id` to hold. See #9240
+            fracNum =
+                divCeil (d * maxnum) res
+
+            divCeil x y =
+                (x + y - 1) // y
+        in
+            (toString i) ++ (withDot (showIntegerZeros chopTrailingZeros digits fracNum))
+
+
+showIntegerZeros : Bool -> Int -> Int -> String
+showIntegerZeros chopTrailingZeros digits a =
+    if chopTrailingZeros && (a == 0) then
+        ""
+    else
+        let
+            s =
+                toString a
+
+            s_ =
+                if chopTrailingZeros then
+                    chopZeros a
+                else
+                    s
+        in
+            String.repeat (digits - String.length s) "0" ++ s_
+
+
+chopZeros : Int -> String
+chopZeros a =
+    if a == 0 then
+        ""
+    else if a % 10 == 0 then
+        chopZeros (a // 10)
+    else
+        toString a
+
+
+withDot : String -> String
+withDot s =
+    if s == "" then
+        s
+    else
+        String.cons '.' s
 
 
 show2 : Int -> String
