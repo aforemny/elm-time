@@ -2,10 +2,13 @@ module Time.LocalTime.Internal.TimeOfDay
     exposing
         ( dayFractionToTimeOfDay
         , daysAndTimeOfDayToTime
+        , hours
         , localToUTCTimeOfDay
         , makeTimeOfDayValid
         , midday
         , midnight
+        , minutes
+        , seconds
         , TimeOfDay(..)
         , timeOfDayToDayFraction
         , timeOfDayToTime
