@@ -1,17 +1,17 @@
-module Time.LocalTime.Internal.TimeZone
-    exposing
-        ( hoursToTimeZone
-        , minutesToTimeZone
-        , TimeZone(..)
-        , timeZoneMinutes
-        , timeZoneOffsetString
-        , timeZoneOffsetString_
-        , timeZoneOffsetString__
-        , toString
-        , utc
-        )
+module Time.LocalTime.Internal.TimeZone exposing
+    ( TimeZone(..)
+    , hoursToTimeZone
+    , minutesToTimeZone
+    , timeZoneMinutes
+    , timeZoneOffsetString
+    , timeZoneOffsetString_
+    , timeZoneOffsetString__
+    , toString
+    , utc
+    )
 
 import Time.Calendar.Private exposing (..)
+
 
 
 --import Time.Clock.System
@@ -20,12 +20,13 @@ import Time.Calendar.Private exposing (..)
 
 
 {-| A TimeZone is a whole number of minutes offset from UTC, together with a
-name and a \"just for summer\" flag.
+name and a "just for summer" flag.
 
-- The number of minutes offset from UTC. Positive means local time will be
-later in the day than UTC.
-- Is this time zone just persisting for the summer?
-- The name of the zone, typically a three- or four-letter acronym.
+  - The number of minutes offset from UTC. Positive means local time will be
+    later in the day than UTC.
+  - Is this time zone just persisting for the summer?
+  - The name of the zone, typically a three- or four-letter acronym.
+
 -}
 type TimeZone
     = TimeZone Int Bool String
@@ -78,15 +79,17 @@ showT pred opt t =
                     Pad i c ->
                         Pad (max 0 (i - 3)) c
         in
-            showPaddedNum opt_ (t // 60) ++ ":" ++ show2 (t % 60)
+        showPaddedNum opt_ (t // 60) ++ ":" ++ show2 (modBy 60 t)
+
     else
-        showPaddedNum opt ((t // 60) * 100 + (t % 60))
+        showPaddedNum opt ((t // 60) * 100 + modBy 60 t)
 
 
 timeZoneOffsetString__ : Bool -> PadOption -> TimeZone -> String
 timeZoneOffsetString__ colon opt (TimeZone t _ _) =
     if t < 0 then
         String.cons '-' (showT colon opt (negate t))
+
     else
         String.cons '+' (showT colon opt t)
 
@@ -120,6 +123,7 @@ toString : TimeZone -> String
 toString ((TimeZone _ _ name) as zone) =
     if name == "" then
         timeZoneOffsetString zone
+
     else
         name
 

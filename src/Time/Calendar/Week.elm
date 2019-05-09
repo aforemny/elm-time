@@ -1,16 +1,15 @@
-module Time.Calendar.Week
-    exposing
-        ( dayOfWeek
-        , DayOfWeek(..)
-        , fromInt
-        , toInt
-        )
+module Time.Calendar.Week exposing
+    ( DayOfWeek(..)
+    , dayOfWeek
+    , fromInt, toInt
+    )
 
 {-| TODO
 
 @docs DayOfWeek
 @docs dayOfWeek
 @docs fromInt, toInt
+
 -}
 
 import Time.Calendar.Days as Days exposing (Day)
@@ -32,7 +31,7 @@ type DayOfWeek
 -}
 fromInt : Int -> DayOfWeek
 fromInt i =
-    case i % 7 of
+    case modBy 7 i of
         0 ->
             Sunday
 
@@ -58,8 +57,8 @@ fromInt i =
 {-| TODO
 -}
 toInt : DayOfWeek -> Int
-toInt dayOfWeek =
-    case dayOfWeek of
+toInt dayOfWeek_ =
+    case dayOfWeek_ of
         Monday ->
             1
 

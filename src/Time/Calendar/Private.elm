@@ -1,4 +1,4 @@
-module Time.Calendar.Private exposing (..)
+module Time.Calendar.Private exposing (PadOption(..), chopZeros, clip, clipValid, div100, mod100, show2, show2Fixed, show3, show4, showFixed, showIntegerZeros, showPadded, showPaddedNum, withDot)
 
 
 type PadOption
@@ -20,19 +20,21 @@ showPaddedNum : PadOption -> Int -> String
 showPaddedNum padOption i =
     case padOption of
         NoPad ->
-            toString i
+            String.fromInt i
 
         pad ->
             if i < 0 then
                 "-" ++ showPaddedNum pad (negate i)
+
             else
-                showPadded pad (toString i)
+                showPadded pad (String.fromInt i)
 
 
 show2Fixed : Int -> Int -> String
 show2Fixed res x =
     if x < 10 then
         String.cons '0' (showFixed res True x)
+
     else
         showFixed res True x
 
@@ -40,11 +42,12 @@ show2Fixed res x =
 showFixed : Int -> Bool -> Int -> String
 showFixed res chopTrailingZeros a =
     if a < 0 then
-        "-" ++ (showFixed res chopTrailingZeros (-a))
+        "-" ++ showFixed res chopTrailingZeros -a
+
     else
         let
             ( i, d ) =
-                ( a // res, a % res )
+                ( a // res, modBy res a )
 
             -- enough digits to be unambiguous
             digits =
@@ -60,41 +63,46 @@ showFixed res chopTrailingZeros a =
             divCeil x y =
                 (x + y - 1) // y
         in
-            (toString i) ++ (withDot (showIntegerZeros chopTrailingZeros digits fracNum))
+        String.fromInt i ++ withDot (showIntegerZeros chopTrailingZeros digits fracNum)
 
 
 showIntegerZeros : Bool -> Int -> Int -> String
 showIntegerZeros chopTrailingZeros digits a =
     if chopTrailingZeros && (a == 0) then
         ""
+
     else
         let
             s =
-                toString a
+                String.fromInt a
 
             s_ =
                 if chopTrailingZeros then
                     chopZeros a
+
                 else
                     s
         in
-            String.repeat (digits - String.length s) "0" ++ s_
+        String.repeat (digits - String.length s) "0" ++ s_
 
 
 chopZeros : Int -> String
 chopZeros a =
     if a == 0 then
         ""
-    else if a % 10 == 0 then
+
+    else if modBy 10 a == 0 then
         chopZeros (a // 10)
+
     else
-        toString a
+        String.fromInt a
 
 
 withDot : String -> String
 withDot s =
     if s == "" then
         s
+
     else
         String.cons '.' s
 
@@ -116,7 +124,7 @@ show4 =
 
 mod100 : Int -> Int
 mod100 x =
-    x % 100
+    modBy 100 x
 
 
 div100 : Int -> Int
@@ -128,8 +136,10 @@ clip : comparable -> comparable -> comparable -> comparable
 clip a b x =
     if x < a then
         a
+
     else if x > b then
         b
+
     else
         x
 
@@ -138,8 +148,10 @@ clipValid : comparable -> comparable -> comparable -> Maybe comparable
 clipValid a b x =
     if x < a then
         Nothing
+
     else if x > b then
         Nothing
+
     else
         Just x
 

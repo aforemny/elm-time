@@ -1,19 +1,18 @@
-module Time.Calendar.Gregorian
-    exposing
-        ( toGregorian
-        , fromGregorian
-        , fromGregorianValid
-        , showGregorian
-        , gregorianMonthLength
-        , addGregorianMonthsClip
-        , addGregorianMonthsRollOver
-        , addGregorianYearsClip
-        , addGregorianYearsRollOver
-        , addGregorianDurationClip
-        , addGregorianDurationRollOver
-        , diffGregorianDurationClip
-        , diffGregorianDurationRollOver
-        )
+module Time.Calendar.Gregorian exposing
+    ( toGregorian
+    , fromGregorian
+    , fromGregorianValid
+    , showGregorian
+    , gregorianMonthLength
+    , addGregorianMonthsClip
+    , addGregorianMonthsRollOver
+    , addGregorianYearsClip
+    , addGregorianYearsRollOver
+    , addGregorianDurationClip
+    , addGregorianDurationRollOver
+    , diffGregorianDurationClip
+    , diffGregorianDurationRollOver
+    )
 
 {-| TODO
 
@@ -30,11 +29,13 @@ module Time.Calendar.Gregorian
 @docs addGregorianDurationRollOver
 @docs diffGregorianDurationClip
 @docs diffGregorianDurationRollOver
+
 -}
+
+import Time.Calendar.CalendarDiffDays exposing (..)
+import Time.Calendar.Days as Days exposing (..)
 import Time.Calendar.MonthDay exposing (..)
 import Time.Calendar.OrdinalDate exposing (..)
-import Time.Calendar.Days as Days exposing (..)
-import Time.Calendar.CalendarDiffDays exposing (..)
 import Time.Calendar.Private exposing (..)
 
 
@@ -50,13 +51,14 @@ toGregorian date =
         ( month, day ) =
             dayOfYearToMonthAndDay (isLeapYear year) yd
     in
-        ( year, month, day )
+    ( year, month, day )
 
 
 {-| Convert from proleptic Gregorian calendar. First argument is year, second
 month number (1-12), third day (1-31).
 
 Invalid values will be clipped to the correct range, month first, then day.
+
 -}
 fromGregorian : Int -> Int -> Int -> Day
 fromGregorian year month day =
@@ -67,6 +69,7 @@ fromGregorian year month day =
 month number (1-12), third day (1-31).
 
 Invalid values will return Nothing
+
 -}
 fromGregorianValid : Int -> Int -> Int -> Maybe Day
 fromGregorianValid year month day =
@@ -85,7 +88,7 @@ showGregorian date =
         ( y, m, d ) =
             toGregorian date
     in
-        (show4 y) ++ "-" ++ (show2 m) ++ "-" ++ (show2 d)
+    show4 y ++ "-" ++ show2 m ++ "-" ++ show2 d
 
 
 {-| The number of days in a given month according to the proleptic Gregorian
@@ -98,7 +101,7 @@ gregorianMonthLength year =
 
 rolloverMonths : ( Int, Int ) -> ( Int, Int )
 rolloverMonths ( y, m ) =
-    ( y + ((m - 1) // 12), ((m - 1) % 12) + 1 )
+    ( y + ((m - 1) // 12), modBy 12 (m - 1) + 1 )
 
 
 addGregorianMonths : Int -> Day -> ( Int, Int, Int )
@@ -110,13 +113,14 @@ addGregorianMonths n day =
         ( y_, m_ ) =
             rolloverMonths ( y, m + n )
     in
-        ( y_, m_, d )
+    ( y_, m_, d )
 
 
 {-| Add months, with days past the last day of the month clipped to the last
 day.
 
 For instance, 2005-01-30 + 1 month = 2005-02-28.
+
 -}
 addGregorianMonthsClip : Int -> Day -> Day
 addGregorianMonthsClip n day =
@@ -124,13 +128,14 @@ addGregorianMonthsClip n day =
         ( y, m, d ) =
             addGregorianMonths n day
     in
-        fromGregorian y m d
+    fromGregorian y m d
 
 
 {-| Add months, with days past the last day of the month rolling over to the
 next month.
 
 For instance, 2005-01-30 + 1 month = 2005-03-02.
+
 -}
 addGregorianMonthsRollOver : Int -> Day -> Day
 addGregorianMonthsRollOver n day =
@@ -138,13 +143,14 @@ addGregorianMonthsRollOver n day =
         ( y, m, d ) =
             addGregorianMonths n day
     in
-        addDays (d - 1) (fromGregorian y m 1)
+    addDays (d - 1) (fromGregorian y m 1)
 
 
 {-| Add years, matching month and day, with Feb 29th clipped to Feb 28th if
-  necessary.
+necessary.
 
 For instance, 2004-02-29 + 2 years = 2006-02-28.
+
 -}
 addGregorianYearsClip : Int -> Day -> Day
 addGregorianYearsClip n =
@@ -155,6 +161,7 @@ addGregorianYearsClip n =
 necessary.
 
 For instance, 2004-02-29 + 2 years = 2006-03-01.
+
 -}
 addGregorianYearsRollOver : Int -> Day -> Day
 addGregorianYearsRollOver n =
@@ -199,22 +206,26 @@ diffGregorianDurationClip day2 day1 =
             if Days.toInt day2 >= Days.toInt day1 then
                 if d2 >= d1 then
                     ymdiff
+
                 else
                     ymdiff - 1
+
             else if d2 <= d1 then
                 ymdiff
+
             else
                 ymdiff + 1
 
         dayAllowed =
             addGregorianDurationClip (CalendarDiffDays ymAllowed 0) day1
     in
-        CalendarDiffDays ymAllowed (diffDays day2 dayAllowed)
+    CalendarDiffDays ymAllowed (diffDays day2 dayAllowed)
 
 
 {-| Calendrical difference, with as many whole months as possible.
 
 Same as 'diffGregorianDurationClip' for positive durations.
+
 -}
 diffGregorianDurationRollOver : Day -> Day -> CalendarDiffDays
 diffGregorianDurationRollOver day2 day1 =
@@ -238,14 +249,17 @@ diffGregorianDurationRollOver day2 day1 =
             if Days.toInt day2 >= Days.toInt day1 then
                 if d2 >= d1 then
                     ymdiff
+
                 else
                     ymdiff - 1
+
             else if d2 <= d1 then
                 ymdiff
+
             else
                 ymdiff + 1
 
         dayAllowed =
             addGregorianDurationRollOver (CalendarDiffDays ymAllowed 0) day1
     in
-        CalendarDiffDays ymAllowed (diffDays day2 dayAllowed)
+    CalendarDiffDays ymAllowed (diffDays day2 dayAllowed)
